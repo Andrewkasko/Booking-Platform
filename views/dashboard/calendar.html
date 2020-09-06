@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <title>Chat</title>
+    <title>Calendar</title>
     <style>#loader {
         transition: all .3s ease-in-out;
         opacity: 1;
@@ -53,7 +53,7 @@
             opacity: 0
         }
     }</style>
-    <link href="style.css" rel="stylesheet">
+    <link href="public/style.css" rel="stylesheet">
 </head>
 <body class="app">
 <div id="loader">
@@ -107,6 +107,7 @@
             </ul>
         </div>
     </div>
+
     <div class="page-container">
         <div class="header navbar">
             <div class="header-container">
@@ -212,8 +213,7 @@
                                     </a></li>
                                 </ul>
                             </li>
-                            <li class="pX-20 pY-15 ta-c bdT"><span><a href=""
-                                                                      class="c-grey-600 cH-blue fsz-sm td-n">View All Email <i
+                            <li class="pX-20 pY-15 ta-c bdT"><span><a href="" class="c-grey-600 cH-blue fsz-sm td-n">View All Email <i
                                     class="fs-xs ti-angle-right mL-10"></i></a></span></li>
                         </ul>
                     </li>
@@ -228,8 +228,8 @@
                                     class="ti-settings mR-10"></i> <span>Setting</span></a></li>
                             <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-user mR-10"></i>
                                 <span>Profile</span></a></li>
-                            <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i
-                                    class="ti-email mR-10"></i> <span>Messages</span></a></li>
+                            <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i class="ti-email mR-10"></i>
+                                <span>Messages</span></a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700"><i
                                     class="ti-power-off mR-10"></i> <span>Logout</span></a></li>
@@ -240,154 +240,138 @@
         </div>
         <main class="main-content bgc-grey-100">
             <div id="mainContent">
-                <div class="full-container">
-                    <div class="peers fxw-nw pos-r">
-                        <div class="peer bdR" id="chat-sidebar">
-                            <div class="layers h-100">
-                                <div class="bdB layer w-100"><input type="text" placeholder="Search contacts..."
-                                                                    name="chatSearch"
-                                                                    class="form-constrol p-15 bdrs-0 w-100 bdw-0"></div>
-                                <div class="layer w-100 fxg-1 scrollable pos-r">
-                                    <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                                        <div class="peer"><img src="https://randomuser.me/api/portraits/men/1.jpg"
-                                                               alt="" class="w-3r h-3r bdrs-50p"></div>
-                                        <div class="peer peer-greed pL-20"><h6 class="mB-0 lh-1 fw-400">John Doe</h6>
-                                            <small class="lh-1 c-green-500">Online</small></div>
-                                    </div>
-                                    <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                                        <div class="peer"><img src="https://randomuser.me/api/portraits/men/2.jpg"
-                                                               alt="" class="w-3r h-3r bdrs-50p"></div>
-                                        <div class="peer peer-greed pL-20"><h6 class="mB-0 lh-1 fw-400">Moo Doe</h6>
-                                            <small class="lh-1 c-amber-500">Away</small></div>
-                                    </div>
-                                    <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                                        <div class="peer"><img src="https://randomuser.me/api/portraits/men/3.jpg"
-                                                               alt="" class="w-3r h-3r bdrs-50p"></div>
-                                        <div class="peer peer-greed pL-20"><h6 class="mB-0 lh-1 fw-400">Adam Jones</h6>
-                                            <small class="lh-1 c-grey-500">Offline</small></div>
-                                    </div>
-                                    <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                                        <div class="peer"><img src="https://randomuser.me/api/portraits/men/4.jpg"
-                                                               alt="" class="w-3r h-3r bdrs-50p"></div>
-                                        <div class="peer peer-greed pL-20"><h6 class="mB-0 lh-1 fw-400">Mizo Doe</h6>
-                                            <small class="lh-1 c-red-500">Busy</small></div>
-                                    </div>
-                                    <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                                        <div class="peer"><img src="https://randomuser.me/api/portraits/men/1.jpg"
-                                                               alt="" class="w-3r h-3r bdrs-50p"></div>
-                                        <div class="peer peer-greed pL-20"><h6 class="mB-0 lh-1 fw-400">John Doe</h6>
-                                            <small class="lh-1 c-green-500">Online</small></div>
-                                    </div>
-                                    <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                                        <div class="peer"><img src="https://randomuser.me/api/portraits/men/2.jpg"
-                                                               alt="" class="w-3r h-3r bdrs-50p"></div>
-                                        <div class="peer peer-greed pL-20"><h6 class="mB-0 lh-1 fw-400">Moo Doe</h6>
-                                            <small class="lh-1 c-amber-500">Away</small></div>
-                                    </div>
-                                    <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                                        <div class="peer"><img src="https://randomuser.me/api/portraits/men/3.jpg"
-                                                               alt="" class="w-3r h-3r bdrs-50p"></div>
-                                        <div class="peer peer-greed pL-20"><h6 class="mB-0 lh-1 fw-400">Adam Jones</h6>
-                                            <small class="lh-1 c-grey-500">Offline</small></div>
-                                    </div>
-                                    <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                                        <div class="peer"><img src="https://randomuser.me/api/portraits/men/4.jpg"
-                                                               alt="" class="w-3r h-3r bdrs-50p"></div>
-                                        <div class="peer peer-greed pL-20"><h6 class="mB-0 lh-1 fw-400">Mizo Doe</h6>
-                                            <small class="lh-1 c-red-500">Busy</small></div>
-                                    </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="bdrs-3 ov-h bgc-white bd">
+                                <div class="bgc-deep-purple-500 ta-c p-30"><h1 class="fw-300 mB-5 lh-1 c-white">01<span
+                                        class="fsz-def">st</span></h1>
+                                    <h3 class="c-white">Monday</h3></div>
+                                <div class="pos-r">
+                                    <button type="button"
+                                            class="mT-nv-50 pos-a r-10 t-2 btn cur-p bdrs-50p p-0 w-3r h-3r btn-warning">
+                                        <i class="ti-plus"></i></button>
+                                    <ul class="m-0 p-0 mT-20">
+                                        <li class="bdB peers ai-c jc-sb fxw-nw"><a
+                                                class="td-n p-20 peers fxw-nw mR-20 peer-greed c-grey-900"
+                                                href="javascript:void(0);" data-toggle="modal"
+                                                data-target="#calendar-edit">
+                                            <div class="peer mR-15"><i class="fa fa-fw fa-clock-o c-red-500"></i></div>
+                                            <div class="peer"><span class="fw-600">All Day Event</span>
+                                                <div class="c-grey-600"><span class="c-grey-700">Nov 01 - </span><i>Website
+                                                    Development</i></div>
+                                            </div>
+                                        </a>
+                                            <div class="peers mR-15">
+                                                <div class="peer"><a href=""
+                                                                     class="td-n c-deep-purple-500 cH-blue-500 fsz-md p-5"><i
+                                                        class="ti-pencil"></i></a></div>
+                                                <div class="peer"><a href=""
+                                                                     class="td-n c-red-500 cH-blue-500 fsz-md p-5"><i
+                                                        class="ti-trash"></i></a></div>
+                                            </div>
+                                        </li>
+                                        <li class="bdB peers ai-c jc-sb fxw-nw"><a
+                                                class="td-n p-20 peers fxw-nw mR-20 peer-greed c-grey-900"
+                                                href="javascript:void(0);" data-toggle="modal"
+                                                data-target="#calendar-edit">
+                                            <div class="peer mR-15"><i class="fa fa-fw fa-clock-o c-blue-500"></i></div>
+                                            <div class="peer"><span class="fw-600">All Day Event</span>
+                                                <div class="c-grey-600"><span class="c-grey-700">Nov 01 - </span><i>Website
+                                                    Development</i></div>
+                                            </div>
+                                        </a>
+                                            <div class="peers mR-15">
+                                                <div class="peer"><a href=""
+                                                                     class="td-n c-deep-purple-500 cH-blue-500 fsz-md p-5"><i
+                                                        class="ti-pencil"></i></a></div>
+                                                <div class="peer"><a href=""
+                                                                     class="td-n c-red-500 cH-blue-500 fsz-md p-5"><i
+                                                        class="ti-trash"></i></a></div>
+                                            </div>
+                                        </li>
+                                        <li class="bdB peers ai-c jc-sb fxw-nw"><a
+                                                class="td-n p-20 peers fxw-nw mR-20 peer-greed c-grey-900"
+                                                href="javascript:void(0);" data-toggle="modal"
+                                                data-target="#calendar-edit">
+                                            <div class="peer mR-15"><i class="fa fa-fw fa-clock-o c-indigo-500"></i>
+                                            </div>
+                                            <div class="peer"><span class="fw-600">All Day Event</span>
+                                                <div class="c-grey-600"><span class="c-grey-700">Nov 01 - </span><i>Website
+                                                    Development</i></div>
+                                            </div>
+                                        </a>
+                                            <div class="peers mR-15">
+                                                <div class="peer"><a href=""
+                                                                     class="td-n c-deep-purple-500 cH-blue-500 fsz-md p-5"><i
+                                                        class="ti-pencil"></i></a></div>
+                                                <div class="peer"><a href=""
+                                                                     class="td-n c-red-500 cH-blue-500 fsz-md p-5"><i
+                                                        class="ti-trash"></i></a></div>
+                                            </div>
+                                        </li>
+                                        <li class="bdB peers ai-c jc-sb fxw-nw"><a
+                                                class="td-n p-20 peers fxw-nw mR-20 peer-greed c-grey-900"
+                                                href="javascript:void(0);" data-toggle="modal"
+                                                data-target="#calendar-edit">
+                                            <div class="peer mR-15"><i class="fa fa-fw fa-clock-o c-green-500"></i>
+                                            </div>
+                                            <div class="peer"><span class="fw-600">All Day Event</span>
+                                                <div class="c-grey-600"><span class="c-grey-700">Nov 01 - </span><i>Website
+                                                    Development</i></div>
+                                            </div>
+                                        </a>
+                                            <div class="peers mR-15">
+                                                <div class="peer"><a href=""
+                                                                     class="td-n c-deep-purple-500 cH-blue-500 fsz-md p-5"><i
+                                                        class="ti-pencil"></i></a></div>
+                                                <div class="peer"><a href=""
+                                                                     class="td-n c-red-500 cH-blue-500 fsz-md p-5"><i
+                                                        class="ti-trash"></i></a></div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="peer peer-greed" id="chat-box">
-                            <div class="layers h-100">
-                                <div class="layer w-100">
-                                    <div class="peers fxw-nw jc-sb ai-c pY-20 pX-30 bgc-white">
-                                        <div class="peers ai-c">
-                                            <div class="peer d-n@md+"><a href="" title="" id="chat-sidebar-toggle"
-                                                                         class="td-n c-grey-900 cH-blue-500 mR-30"><i
-                                                    class="ti-menu"></i></a></div>
-                                            <div class="peer mR-20"><img
-                                                    src="https://randomuser.me/api/portraits/men/12.jpg" alt=""
-                                                    class="w-3r h-3r bdrs-50p"></div>
-                                            <div class="peer"><h6 class="lh-1 mB-0">John Doe</h6><i class="fsz-sm lh-1">Typing...</i>
+                        <div class="col-md-8">
+                            <div id="full-calendar"></div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="calendar-edit">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="bd p-15"><h5 class="m-0">Add Event</h5></div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group"><label class="fw-500">Event title</label> <input
+                                                class="form-control bdc-grey-200"></div>
+                                        <div class="row">
+                                            <div class="col-md-6"><label class="fw-500">Start</label>
+                                                <div class="timepicker-input input-icon form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon bgc-white bd bdwR-0"><i
+                                                                class="ti-calendar"></i></div>
+                                                        <input type="text" class="form-control bdc-grey-200 start-date"
+                                                               placeholder="Datepicker" data-provide="datepicker"></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="peers"><a href=""
-                                                              class="peer td-n c-grey-900 cH-blue-500 fsz-md mR-30"
-                                                              title=""><i class="ti-video-camera"></i> </a><a href=""
-                                                                                                              class="peer td-n c-grey-900 cH-blue-500 fsz-md mR-30"
-                                                                                                              title=""><i
-                                                class="ti-headphone"></i> </a><a href=""
-                                                                                 class="peer td-n c-grey-900 cH-blue-500 fsz-md"
-                                                                                 title=""><i class="ti-more"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="layer w-100 fxg-1 bgc-grey-200 scrollable pos-r">
-                                    <div class="p-20 gapY-15">
-                                        <div class="peers fxw-nw">
-                                            <div class="peer mR-20"><img class="w-2r bdrs-50p"
-                                                                         src="https://randomuser.me/api/portraits/men/11.jpg"
-                                                                         alt=""></div>
-                                            <div class="peer peer-greed">
-                                                <div class="layers ai-fs gapY-5">
-                                                    <div class="layer">
-                                                        <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                                            <div class="peer mR-10"><small>10:00 AM</small></div>
-                                                            <div class="peer-greed"><span>Lorem Ipsum is simply dummy text of</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="layer">
-                                                        <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                                            <div class="peer mR-10"><small>10:00 AM</small></div>
-                                                            <div class="peer-greed"><span>the printing and typesetting industry.</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="layer">
-                                                        <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                                            <div class="peer mR-10"><small>10:00 AM</small></div>
-                                                            <div class="peer-greed"><span>Lorem Ipsum has been the industry's</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            <div class="col-md-6"><label class="fw-500">End</label>
+                                                <div class="timepicker-input input-icon form-group">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon bgc-white bd bdwR-0"><i
+                                                                class="ti-calendar"></i></div>
+                                                        <input type="text" class="form-control bdc-grey-200 end-date"
+                                                               placeholder="Datepicker" data-provide="datepicker"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="peers fxw-nw ai-fe">
-                                            <div class="peer ord-1 mL-20"><img class="w-2r bdrs-50p"
-                                                                               src="https://randomuser.me/api/portraits/men/12.jpg"
-                                                                               alt=""></div>
-                                            <div class="peer peer-greed ord-0">
-                                                <div class="layers ai-fe gapY-10">
-                                                    <div class="layer">
-                                                        <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                                            <div class="peer mL-10 ord-1"><small>10:00 AM</small></div>
-                                                            <div class="peer-greed ord-0"><span>Heloo</span></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="layer">
-                                                        <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                                            <div class="peer mL-10 ord-1"><small>10:00 AM</small></div>
-                                                            <div class="peer-greed ord-0"><span>??</span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="form-group"><label class="fw-500">Event title</label> <textarea
+                                                class="form-control bdc-grey-200" rows="5"></textarea></div>
+                                        <div class="text-right">
+                                            <button class="btn btn-primary cur-p" data-dismiss="modal">Done</button>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="layer w-100">
-                                    <div class="p-20 bdT bgc-white">
-                                        <div class="pos-r"><input type="text" class="form-control bdrs-10em m-0"
-                                                                  placeholder="Say something...">
-                                            <button type="button"
-                                                    class="btn btn-primary bdrs-50p w-2r p-0 h-2r pos-a r-1 t-1"><i
-                                                    class="fa fa-paper-plane-o"></i></button>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -399,7 +383,7 @@
             <span>Copyright © 2019 Designed by. All rights reserved.</span></footer>
     </div>
 </div>
-<script type="text/javascript" src="vendor.js"></script>
-<script type="text/javascript" src="bundle.js"></script>
+<script type="text/javascript" src="public/vendor.js"></script>
+<script type="text/javascript" src="public/bundle.js"></script>
 </body>
 </html>

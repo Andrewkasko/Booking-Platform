@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+var path = require('path');
+const { ensureAuthenticated } = require('./config/auth');
+
 
 const app = express();
 
@@ -31,6 +34,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
+
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
@@ -51,6 +55,14 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
+
+
+// DASHBOARD
+app.use('/dashboard', ensureAuthenticated);
+app.use(ensureAuthenticated, express.static(__dirname + '/views/dashboard'));
+////////////
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
+
