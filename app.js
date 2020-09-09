@@ -5,6 +5,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 var path = require('path');
+
 const { ensureAuthenticated } = require('./config/auth');
 
 
@@ -54,15 +55,28 @@ app.use((req, res, next) => {
 //Routes
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
+app.use('/public', express.static('public'));
+app.use('/assets', express.static( 'assets' ) );
 
-
+app.use(function(req, res, next) {
+    res.locals.user = req.session.user;
+    next();
+});
 
 // DASHBOARD
-app.use('/dashboard', ensureAuthenticated);
-app.use(ensureAuthenticated, express.static(__dirname + '/views/dashboard'));
+app.use('/views/dashboard.ejs', ensureAuthenticated);
+app.use(ensureAuthenticated, express.static(__dirname + '/views/dashboard.ejs'));
 ////////////
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
+
+
+app.get('/', function(req, res){
+    req.user.name;
+    res.render('dashboard',{user: username});
+});
+
+
 
