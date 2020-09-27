@@ -1,0 +1,59 @@
+{
+  "databaseName": "All Doctors Information",
+  "doctors": [
+    {
+      "doctorID": "1",
+      "doctorFirstName": "Mathew",
+      "doctorLastName": "O'Connor",
+      "doctorContactNumber": "(02) 9923 1838",
+      "doctorAddress": "3 Doris St, North Sydney, NSW 2060",
+      "doctorSpeciality": "General Practitioner",
+      "doctorBackgroundInfo": "Has been Practicing as an MD for 4 years"
+    },
+    {
+      "doctorID": "2",
+      "doctorFirstName": "Dalal",
+      "doctorLastName": "Akoury",
+      "doctorContactNumber": "(02) 9231 3230",
+      "doctorAddress": "180 Phillip St, Sydney, NSW 2000",
+      "doctorSpeciality": "General Practitioner",
+      "doctorBackgroundInfo": "Has been Practicing as an MD for 8 years"
+    },
+    {
+      "doctorID": "3",
+      "doctorFirstName": "Jacinda",
+      "doctorLastName": "Smith",
+      "doctorContactNumber": "(02) 8067 6910",
+      "doctorAddress": "233 Macquarie St, Sydney, NSW 2000",
+      "doctorSpeciality": "Dermatologist",
+      "doctorBackgroundInfo": "Has been Practicing as an MD for 5 years"
+    },
+    {
+      "doctorID": "4",
+      "doctorFirstName": "Ova",
+      "doctorLastName": "Ernser",
+      "doctorContactNumber": "(02) 9232 6687",
+      "doctorAddress": "50 Park St, Sydney, NSW 2000",
+      "doctorSpeciality": "Gynaecologist",
+      "doctorBackgroundInfo": "Has been Practicing as an MD for 4 years"
+    },
+    {
+      "doctorID": "5",
+      "doctorFirstName": "Marian",
+      "doctorLastName": "McGlynn",
+      "doctorContactNumber": "(02) 9241 4406",
+      "doctorAddress": "55 King St, Sydney, NSW 2001",
+      "doctorSpeciality": "General Practitioner",
+      "doctorBackgroundInfo": "Has been Practicing as an MD for 2 years"
+    },
+    {
+      "doctorID": "6",
+      "doctorFirstName": "Jasen",
+      "doctorLastName": "Nikolaus",
+      "doctorContactNumber": "(02) 9959 4496",
+      "doctorAddress": "50 Park St, Sydney, NSW 2000",
+      "doctorSpeciality": "General Practitioner",
+      "doctorBackgroundInfo": "Has been Practicing as an MD for 10 years"
+    }
+  ]
+}
