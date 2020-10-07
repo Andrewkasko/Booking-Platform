@@ -18,11 +18,11 @@ router.get('/register', (req, res) => res.render('Register'));
 
 //Register Handle
 router.post('/register', (req, res) => {
-    const {name, email, accountType, password, password2} = req.body;
+    const {name, email, accountType, address, password, password2} = req.body;
     let errors = [];
 
     //Check required fields
-    if (!name || !email || !password || !password2) {
+    if (!name || !email || !address || !password || !password2) {
         errors.push({msg: 'Please fill in all fields'});
     }
     if (password !== password2) {
@@ -39,6 +39,7 @@ router.post('/register', (req, res) => {
             errors,
             name,
             accountType,
+            address,
             email,
             password,
             password2
@@ -55,6 +56,7 @@ router.post('/register', (req, res) => {
                         name,
                         email,
                         accountType,
+                        address,
                         password,
                         password2
                     });
@@ -63,6 +65,7 @@ router.post('/register', (req, res) => {
                         name,
                         email,
                         accountType,
+                        address,
                         password
                     });
 
