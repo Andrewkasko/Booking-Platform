@@ -52,47 +52,23 @@
                 transform: scale(1);
                 opacity: 0
             }
-        }</style>
+        }
+
+    </style>
     <link href="public/style.css" rel="stylesheet">
 </head>
 <body class="app">
 <div id="loader">
     <div class="spinner"></div>
 </div>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.4.5/jquery.datetimepicker.css"
-      rel="stylesheet"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.4.5/jquery.datetimepicker.js"></script>
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="functionality.js"> </script>
 <script>window.addEventListener('load', function load() {
         const loader = document.getElementById('loader');
         setTimeout(function () {
             loader.classList.add('fadeOut');
         }, 300);
-    });
-    // $(function() {
-    //     $('#BookTimePicker').datetimepicker();
-    // });
-
-    jQuery(function ($) { // wait until the DOM is ready
-        // $('#BookTimePicker').timepicker({
-        //     'disableTimeRanges': [
-        //         ['1am', '2am'],
-        //         ['3am', '4:01am']
-        //     ]
-        // });
-
-        // $('#BookTimePicker').datepicker();
-
-        $('#BookTimePicker').datepicker({
-            interval: 60,
-            width: '200px',
-        });
-
-    });
-
-</script>
+    });</script>
 <div>
     <div class="sidebar">
         <div class="sidebar-inner">
@@ -121,7 +97,7 @@
                 <li class="nav-item"><a class="sidebar-link" href="/calendar"><span class="icon-holder"><i
                                     class="c-deep-orange-500 ti-calendar"></i> </span><span
                                 class="title">Calendar</span></a></li>
-                <li class="nav-item"><a class="sidebar-link" href="/approveABooking"><span class="icon-holder"><i
+                <li class="nav-item"><a class="sidebar-link" href="/booking"><span class="icon-holder"><i
                                     class="c-deep-orange-500 ti-calendar"></i> </span><span class="title">Booking</span></a>
                 </li>
                 <li class="nav-item"><a class="sidebar-link" href="/blank"><span class="icon-holder"><i
@@ -282,34 +258,121 @@
             <div id="mainContent">
                 <div class="full-container">
 
-                    <div class="masonry-item col-md-6">
+                    <div class="masonry-item col-md-12">
                         <div class="bd bgc-white p-20">
                             <div class="layers">
-                                <div class="layer w-100 mB-10"><h6 class="lh-1">Bookings</h6></div>
-                                <div class="layer w-100">
-                                    <div class=form-row>
-                                        <div class="col-md-4">
-                                            <input type="date" name="desiredDate" id="desiredDate">
+                                <div class="layer w-100 mB-10">
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <h2 class="lh-1">Manage Bookings (Doctor's View)</h2>
                                         </div>
-                                        <div class="col-md-4">
-                                            <input type="text" placeholder="Problem description" name="issueDescription"
-                                                   id="issueDescription">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="button" value="Book" name="confirmBooking" id="confirmBooking">
-                                        </div>
+                                    </div>
+                                    <div class="topnav w-100" style="margin-top:20px; margin-bottom: 20px">
+                                        <a class="active" href="/approveABooking">Pending Bookings</a>
+                                        <a href="/UpcomingBookings">Upcoming Bookings</a>
+                                        <a href="/booking">All Bookings</a>
+                                        <a href="/DoctorBookingSettings">Doctor Booking Settings</a>
                                     </div>
                                     <div class="form-row">
-                                        <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" readonly>
-                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        <div class="col-md-6">
+                                            <h2 class="lh-1">Pending Bookings</h2>
                                         </div>
                                     </div>
-                                    <div class="form-row">
-                                        <input type="time" id="BookTimePicker" name="BookTimePicker">
-                                    </div>
-
                                 </div>
+                                <div class="w-100">
+                                <%- include('../partials/messages') %>
+                                </div>
+
+                                <div class="layer w-100" style="overflow-y: scroll; height:80vh;">
+                                    <% for(var booking of bookings){ %>
+                                        <div class="card" style="width: 100%;">
+                                            <div class="card-body">
+
+                                                <div class="form-row">
+                                                    <div class="col-md-6">
+                                                        <h4 class="card-title"
+                                                            style="color:black;"><%= booking.name + " - " + booking.topic %></h4>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <% if(booking.status == "Pending") { %>
+                                                            <div style=" width: 100%; border: 5px solid orangered; background: orange;
+                                                             border-radius: 25px; padding: 10px;">
+                                                                <h5 style="text-align: center!important; color:white; margin: auto;">
+                                                                    Pending Doctors Approval</h5>
+                                                            </div>
+                                                        <% }else if (booking.status == "Rejected" ){ %>
+                                                            <div style=" width: 100%; border: 5px solid darkred; background: red;
+                                                             border-radius: 25px; padding: 10px;">
+                                                                <h5 style="text-align: center!important; color:white; margin: auto;">
+                                                                    Appointment Rejected</h5>
+                                                            </div>
+                                                        <% }else switch (booking.bookingType) {
+                                                        case "Normal": %>
+                                                        <div style=" width: 100%; border: 5px solid darkgreen; background: green;
+                                                            border-radius: 25px; padding: 10px;">
+                                                            <h5 style="text-align: center!important; color:white; margin: auto;">
+                                                                Appointment Approved</h5>
+                                                        </div>
+                                                        <% break; %>
+                                                        <% case "Extreme": %>
+                                                        <div style=" width: 100%; border: 5px solid darkred; background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px);
+                                                            border-radius: 25px; padding: 10px;">
+                                                            <h5 style="text-align: center!important; color:white; margin: auto;">
+                                                                Extreme Case</h5>
+                                                        </div>
+                                                        <% break; %>
+                                                        <% default: %>
+                                                        <% break; %>
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+
+                                                    <div class="col-md-12">
+                                                        <h6 class="card-subtitle mb-2 text-muted">
+                                                            <%= booking.date + "  -  " + booking.time %>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+
+                                                    <div class="col-md-12">
+                                                        <h6 class="card-subtitle mb-2 text-muted">
+                                                            <%= "Doctor: " + booking.doctorName %>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+
+                                                <p class="card-text">
+                                                    <%= booking.description %>
+                                                </p>
+
+                                                <div class="form-row">
+                                                    <div class="col-md-12" style="float:right">
+
+                                                        <form action="/rejectBooking" method="post">
+                                                            <input type="hidden" id="id" name="id" value="<%=booking._id%>">
+                                                            <button class="btn btn-secondary" style="float:right; margin: 10px; background: darkred">
+                                                                Reject Booking
+                                                            </button>
+                                                        </form>
+                                                        <form action="/approveBooking" method="post">
+                                                            <input type="hidden" id="id" name="id" value="<%=booking._id%>">
+                                                            <button class="btn btn-secondary" style="float:right; margin: 10px; background: darkgreen">
+                                                                Accept Booking
+                                                            </button>
+                                                        </form>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <br>
+                                    <% } %>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -318,9 +381,6 @@
                 </div>
             </div>
         </main>
-        <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Copyright © 2019 Designed by <a
-                        href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>. All rights reserved.</span>
-        </footer>
     </div>
 </div>
 <script type="text/javascript" src="public/vendor.js"></script>

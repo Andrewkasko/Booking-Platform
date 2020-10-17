@@ -260,23 +260,10 @@
                                 <div class="layer w-100 mB-10">
                                     <div class="form-row">
                                         <div class="col-md-6">
-                                            <h2 class="lh-1">Manage Bookings (Doctor's View)</h2>
-                                        </div>
-                                    </div>
-                                    <div class="topnav w-100" style="margin-top:20px; margin-bottom: 20px">
-                                        <a href="/approveABooking">Pending Bookings</a>
-                                        <a href="/UpcomingBookings">Upcoming Bookings</a>
-                                        <a class="active" href="/booking">All Bookings</a>
-                                        <a href="/DoctorBookingSettings">Doctor Booking Settings</a>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-6">
-                                            <h2 class="lh-1">All Bookings</h2>
+                                        <h2 class="lh-1">Bookings</h2>
                                         </div>
                                         <div class="col-md-6">
-                                            <button class="btn btn-success"><a
-                                                        style="color: white; align-content: center"
-                                                        href="/createABooking"><h6>Create Booking + </h6></a></button>
+                                            <button class="btn btn-success"><a style="color: white; align-content: center" href="/createABooking"> <h6>Create Booking + </h6></a></button>
 
                                         </div>
                                     </div>
@@ -285,8 +272,7 @@
                                     <div class="masonry-item col-md-12" style="overflow: scroll; height:80vh;">
                                         <div class="bd bgc-white p-20">
                                             <div class="layers">
-                                                <div class="layer w-100 mB-10"><h6 class="lh-1">All Appointments</h6>
-                                                </div>
+                                                <div class="layer w-100 mB-10"><h6 class="lh-1">All Appointments</h6></div>
                                                 <div class="layer w-100">
 
                                                     <% for(var booking of bookings){ %>
@@ -296,7 +282,7 @@
                                                                 <div class="form-row">
                                                                     <div class="col-md-6">
                                                                         <h4 class="card-title"
-                                                                            style="color:black;"><%= booking.name + " - " + booking.topic %></h4>
+                                                                            style="color:black;"><%= booking.name + " - " + booking.topic%></h4>
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <% if(booking.status == "Pending") { %>
@@ -333,60 +319,48 @@
                                                                 </div>
                                                                 <div class="form-row">
 
-                                                                    <div class="col-md-12">
+                                                                    <div class = "col-md-12">
                                                                         <h6 class="card-subtitle mb-2 text-muted">
-                                                                            <%= booking.date + "  -  " + booking.time %>
+                                                                            <%= booking.date + "  -  " + booking.time%>
                                                                         </h6>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-row">
 
-                                                                    <div class="col-md-12">
+                                                                    <div class = "col-md-12">
                                                                         <h6 class="card-subtitle mb-2 text-muted">
-                                                                            <%= "Doctor: " + booking.doctorName %>
+                                                                            <%= "Doctor: " + booking.doctorName%>
                                                                         </h6>
                                                                     </div>
                                                                 </div>
 
                                                                 <p class="card-text">
-                                                                    <%= booking.description %>
+                                                                    <%= booking.description%>
                                                                 </p>
 
-<!--                                                                <div class="form-row">-->
-<!--                                                                    <div class="col-md-6">-->
-<!--                                                                    </div>-->
-<!--                                                                    <div class="col-md-2">-->
-<!--                                                                        <button class="btn btn-secondary">More-->
-<!--                                                                            information-->
-<!--                                                                        </button>-->
-<!--                                                                    </div>-->
-<!--                                                                    <div class="col-md-2">-->
-<!--                                                                        <button class="btn btn-secondary">Edit Booking-->
-<!--                                                                        </button>-->
-<!--                                                                    </div>-->
-<!--                                                                    <div class="col-md-2">-->
-<!--                                                                        <div class="dropdown show">-->
-<!--                                                                            <a class="btn btn-secondary dropdown-toggle"-->
-<!--                                                                               href="#" role="button"-->
-<!--                                                                               id="dropdownMenuLink"-->
-<!--                                                                               data-toggle="dropdown"-->
-<!--                                                                               aria-haspopup="true"-->
-<!--                                                                               aria-expanded="false">-->
-<!--                                                                                Dropdown link-->
-<!--                                                                            </a>-->
+                                                                <div class="form-row">
+                                                                    <div class="col-md-6">
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <button class="btn btn-secondary">More information</button>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <button class="btn btn-secondary">Edit Booking</button>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="dropdown show">
+                                                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                Dropdown link
+                                                                            </a>
 
-<!--                                                                            <div class="dropdown-menu"-->
-<!--                                                                                 aria-labelledby="dropdownMenuLink">-->
-<!--                                                                                <a class="dropdown-item"-->
-<!--                                                                                   href="#">Action</a>-->
-<!--                                                                                <a class="dropdown-item" href="#">Another-->
-<!--                                                                                    action</a>-->
-<!--                                                                                <a class="dropdown-item" href="#">Something-->
-<!--                                                                                    else here</a>-->
-<!--                                                                            </div>-->
-<!--                                                                        </div>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
+                                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                                                <a class="dropdown-item" href="#">Action</a>
+                                                                                <a class="dropdown-item" href="#">Another action</a>
+                                                                                <a class="dropdown-item" href="#">Something else here</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
                                                             </div>
                                                         </div>

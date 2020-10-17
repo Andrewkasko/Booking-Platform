@@ -59,40 +59,12 @@
 <div id="loader">
     <div class="spinner"></div>
 </div>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.4.5/jquery.datetimepicker.css"
-      rel="stylesheet"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.4.5/jquery.datetimepicker.js"></script>
-
-
 <script>window.addEventListener('load', function load() {
         const loader = document.getElementById('loader');
         setTimeout(function () {
             loader.classList.add('fadeOut');
         }, 300);
-    });
-    // $(function() {
-    //     $('#BookTimePicker').datetimepicker();
-    // });
-
-    jQuery(function ($) { // wait until the DOM is ready
-        // $('#BookTimePicker').timepicker({
-        //     'disableTimeRanges': [
-        //         ['1am', '2am'],
-        //         ['3am', '4:01am']
-        //     ]
-        // });
-
-        // $('#BookTimePicker').datepicker();
-
-        $('#BookTimePicker').datepicker({
-            interval: 60,
-            width: '200px',
-        });
-
-    });
-
-</script>
+    });</script>
 <div>
     <div class="sidebar">
         <div class="sidebar-inner">
@@ -282,33 +254,51 @@
             <div id="mainContent">
                 <div class="full-container">
 
-                    <div class="masonry-item col-md-6">
+                    <div class="masonry-item col-md-12">
                         <div class="bd bgc-white p-20">
                             <div class="layers">
-                                <div class="layer w-100 mB-10"><h6 class="lh-1">Bookings</h6></div>
-                                <div class="layer w-100">
-                                    <div class=form-row>
-                                        <div class="col-md-4">
-                                            <input type="date" name="desiredDate" id="desiredDate">
+                                <div class="layer w-100 mB-10">
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <h2 class="lh-1">Manage Bookings (Doctor's View)</h2>
                                         </div>
-                                        <div class="col-md-4">
-                                            <input type="text" placeholder="Problem description" name="issueDescription"
-                                                   id="issueDescription">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="button" value="Book" name="confirmBooking" id="confirmBooking">
-                                        </div>
+                                    </div>
+                                    <div class="topnav w-100" style="margin-top:20px; margin-bottom: 20px">
+                                        <a href="/approveABooking">Pending Bookings</a>
+                                        <a href="/UpcomingBookings">Upcoming Bookings</a>
+                                        <a href="/booking">All Bookings</a>
+                                        <a  class="active" href="/DoctorBookingSettings">Doctor Booking Settings</a>
                                     </div>
                                     <div class="form-row">
-                                        <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" readonly>
-                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        <div class="col-md-6">
+                                            <h2 class="lh-1">Doctor Booking Settings</h2>
                                         </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <input type="time" id="BookTimePicker" name="BookTimePicker">
-                                    </div>
 
+                                    </div>
+                                </div>
+                                <div class="layer w-100">
+                                    <div class="masonry-item col-md-12">
+                                        <div class="bd bgc-white p-20">
+                                            <div class="layers">
+                                                <div class="layer w-100 mB-10"><h6 class="lh-1">Update Booking Preferences</h6></div>
+                                                <div class="layer w-100">
+                                                    <%- include('../partials/messages') %>
+                                                    <br>
+                                                    <form action="/users/UpdateDoctorBookingPreferences" method="POST">
+                                                        <div class="form row">
+                                                            <input type="hidden" name="status" id="status" value="Pending">
+                                                            <input type="hidden" name="name" id="name" value="<%= name %>">
+                                                        </div>
+
+                                                        <br>
+                                                        <div class="text-center" style="width: 80%;">
+                                                            <input class="btn btn-primary" style="padding-left: 50px; padding-right: 50px" type="submit" value="Submit">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -318,9 +308,7 @@
                 </div>
             </div>
         </main>
-        <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Copyright © 2019 Designed by <a
-                        href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>. All rights reserved.</span>
-        </footer>
+
     </div>
 </div>
 <script type="text/javascript" src="public/vendor.js"></script>

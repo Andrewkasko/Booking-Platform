@@ -59,40 +59,12 @@
 <div id="loader">
     <div class="spinner"></div>
 </div>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.4.5/jquery.datetimepicker.css"
-      rel="stylesheet"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.4.5/jquery.datetimepicker.js"></script>
-
-
 <script>window.addEventListener('load', function load() {
         const loader = document.getElementById('loader');
         setTimeout(function () {
             loader.classList.add('fadeOut');
         }, 300);
-    });
-    // $(function() {
-    //     $('#BookTimePicker').datetimepicker();
-    // });
-
-    jQuery(function ($) { // wait until the DOM is ready
-        // $('#BookTimePicker').timepicker({
-        //     'disableTimeRanges': [
-        //         ['1am', '2am'],
-        //         ['3am', '4:01am']
-        //     ]
-        // });
-
-        // $('#BookTimePicker').datepicker();
-
-        $('#BookTimePicker').datepicker({
-            interval: 60,
-            width: '200px',
-        });
-
-    });
-
-</script>
+    });</script>
 <div>
     <div class="sidebar">
         <div class="sidebar-inner">
@@ -282,33 +254,136 @@
             <div id="mainContent">
                 <div class="full-container">
 
-                    <div class="masonry-item col-md-6">
+                    <div class="masonry-item col-md-12">
                         <div class="bd bgc-white p-20">
                             <div class="layers">
-                                <div class="layer w-100 mB-10"><h6 class="lh-1">Bookings</h6></div>
-                                <div class="layer w-100">
-                                    <div class=form-row>
-                                        <div class="col-md-4">
-                                            <input type="date" name="desiredDate" id="desiredDate">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="text" placeholder="Problem description" name="issueDescription"
-                                                   id="issueDescription">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="button" value="Book" name="confirmBooking" id="confirmBooking">
-                                        </div>
-                                    </div>
+                                <div class="layer w-100 mB-10">
                                     <div class="form-row">
-                                        <div class="input-append date form_datetime">
-                                            <input size="16" type="text" value="" readonly>
-                                            <span class="add-on"><i class="icon-th"></i></span>
+                                        <div class="col-md-6">
+                                            <h2 class="lh-1">Edit Details</h2>
                                         </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <input type="time" id="BookTimePicker" name="BookTimePicker">
-                                    </div>
 
+                                    </div>
+                                </div>
+                                <div class="layer w-100">
+                                    <div class="masonry-item col-md-12">
+                                        <div class="bd bgc-white p-20">
+                                            <div class="layers">
+                                                <div class="layer w-100 mB-10"><h6 class="lh-1">Create an
+                                                        Appointment</h6></div>
+                                                <div class="layer w-100">
+                                                    <br>
+                                                    <form>
+                                                        <div class="form row">
+
+                                                            <div class="col-md-4">
+                                                                <label for="doctor">Select a Doctor <span style="color: red">*</span></label>
+                                                                <select class="form-control" name="doctor" id="doctor">
+                                                                    <option value="Any">Any Doctor</option>
+                                                                    <% for(var doctor of doctors){ %>
+                                                                    <option value="<%=doctor.doctorName %>"><%=doctor.doctorName%></option>
+                                                                    <% }%>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="date">Select a Date <span style="color: red">*</span></label>
+                                                                <input type="date" class="form-control" name="date" id="date">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="time">Select a Time <span style="color: red">*</span></label>
+                                                                <input type="time" class="form-control" id="time" name="time">
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="form-row">
+                                                            <div class="col-md-3">
+                                                                <label for="topic">Area of Pain <span style="color: red">*</span></label>
+                                                                <input type="text" class="form-control" placeholder="Enter Area of Pain" id="topic"
+                                                                       name="topic">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label for="topic">Description <span style="color: red">*</span></label>
+                                                                <input type="text" class="form-control" placeholder="Enter Area of Pain" id="topic"
+                                                                       name="topic">
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label for="doctor">Emergency Booking<span style="color: red">*</span></label>
+                                                                <select class="form-control" name="doctor" id="doctor">
+                                                                    <option value="no">No</option>
+                                                                    <option value="yes">Yes</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="text-center" style="width: 80%;">
+                                                            <input class="btn btn-primary" style="padding-left: 50px; padding-right: 50px" type="submit" value="Submit">
+                                                        </div>
+
+                                                    </form>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="masonry-item col-md-12">
+                                        <div class="bd bgc-white p-20">
+                                            <div class="layers">
+                                                <div class="layer w-100 mB-10"><h6 class="lh-1">Create an
+                                                        Appointment</h6></div>
+                                                <div class="layer w-100">
+                                                    <br>
+                                                    <form>
+                                                        <div class="form row">
+
+                                                            <div class="col-md-4">
+                                                                <label for="doctor">Select a Doctor <span style="color: red">*</span></label>
+                                                                <select class="form-control" name="doctor" id="doctor">
+                                                                    <option value="Any">Any Doctor</option>
+
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="date">Select a Date <span style="color: red">*</span></label>
+                                                                <input type="date" class="form-control" name="date" id="date">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="time">Select a Time <span style="color: red">*</span></label>
+                                                                <input type="time" class="form-control" id="time" name="time">
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="form-row">
+                                                            <div class="col-md-3">
+                                                                <label for="topic">Area of Pain <span style="color: red">*</span></label>
+                                                                <input type="text" class="form-control" placeholder="Enter Area of Pain" id="topic"
+                                                                       name="topic">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label for="topic">Description <span style="color: red">*</span></label>
+                                                                <input type="text" class="form-control" placeholder="Enter Area of Pain" id="topic"
+                                                                       name="topic">
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label for="doctor">Emergency Booking<span style="color: red">*</span></label>
+                                                                <select class="form-control" name="doctor" id="doctor">
+                                                                    <option value="no">No</option>
+                                                                    <option value="yes">Yes</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="text-center" style="width: 80%;">
+                                                            <input class="btn btn-primary" style="padding-left: 50px; padding-right: 50px" type="submit" value="Submit">
+                                                        </div>
+
+                                                    </form>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -318,9 +393,6 @@
                 </div>
             </div>
         </main>
-        <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Copyright © 2019 Designed by <a
-                        href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a>. All rights reserved.</span>
-        </footer>
     </div>
 </div>
 <script type="text/javascript" src="public/vendor.js"></script>
