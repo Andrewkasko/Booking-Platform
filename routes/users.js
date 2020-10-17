@@ -101,27 +101,32 @@ router.post('/register', (req, res) => {
 
 //login Handle
 router.post('/login', (req, res, next) => {
+    console.log('connected - REQ - ' + req.body.email);
 
     mongoose.connect(url, function (err, db) {
-        console.log('connected');
 
         db.collection('users').findOne({
             email: req.body.email
         }, function (err, result) {
             if (err) throw err;
-            console.log(result.accountType);
-            if (result.accountType == "Patient") {
-                passport.authenticate('local', {
-                    successRedirect: '/dashboard',
-                    failureRedirect: '/users/login',
-                    failureFlash: true
-                })(req, res, next);
-            } else {
-                passport.authenticate('local', {
-                    successRedirect: '/doctorDashboard',
-                    failureRedirect: '/users/login',
-                    failureFlash: true
-                })(req, res, next);
+            console.log(result);
+            //console.log(result.accountType);
+            if(!null) {
+                // if (result.accountType == "Patient") {
+                    passport.authenticate('local', {
+                        successRedirect: '/dashboard',
+                        failureRedirect: '/users/login',
+                        failureFlash: true
+                    })(req, res, next);
+                // } else {
+                //     passport.authenticate('local', {
+                //         successRedirect: '/dashboard',
+                //         failureRedirect: '/users/login',
+                //         failureFlash: true
+                //     })(req, res, next);
+                // }
+            }else{
+                res.flash("error_msg", "Email not found")
             }
         });
     });
@@ -129,11 +134,11 @@ router.post('/login', (req, res, next) => {
 
 
 //Logout Handle
-router.get('/logout', (req, res) => {
-    req.logout();
-    req.flash('success_msg', 'You are logged out');
-    res.redirect('/users/login');
-});
+// router.get('/logout', (req, res) => {
+//     req.logout();
+//     req.flash('success_msg', 'You are logged out');
+//     res.redirect('/users/login');
+// });
 
 router.get('users/createABooking', (req, res) => res.render('createABooking'));
 //User model
@@ -226,6 +231,27 @@ router.post('/createABooking', (req, res) => {
     console.log("status: " + req.body.topic);
     const {name, status, doctorName, bookingType, date, time, topic, description} = req.body;
 
+    var occupiedBooking = false;
+    console.log("DATE TYPE: " + typeof (date));
+    console.log("DATE TYPE: " + typeof (new Date(date)));
+    console.log(new Date(date));
+    console.log("time TYPE: " + typeof (time));
+
+    mongoose.connect(url, function (err, db) {
+        db.collection('bookings').find(
+            {
+                date: new Date(date),
+                time: time
+            }
+        ).toArray().then(result => {
+            console.log("RESULT: " + result);
+            console.log("RESULT LENGTH: " + result.length);
+            if(result.length > 0){
+                occupiedBooking = true;
+            }
+        }).catch(error => console.error(error));
+    });
+
     let errors = [];
     //Check required fields
     if (!name || !status || !doctorName || !bookingType || !date || !time || !topic || !description) {
@@ -233,6 +259,9 @@ router.post('/createABooking', (req, res) => {
     }
     if (errors.length > 0) {
         console.log("error in booking");
+        req.flash('error_msg', 'Please Fill in all the Fields');
+        res.redirect('/createABooking');
+    } else if(occupiedBooking){
         req.flash('error_msg', 'Please Fill in all the Fields');
         res.redirect('/createABooking');
     } else {

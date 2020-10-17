@@ -18,20 +18,19 @@ router.get('/dashboard', ensureAuthenticated, function (req, res) {
         console.log('connected');
 
         db.collection('users').findOne({
-            email: "Akaskaniotis11113@gmail.com"
+            email: req.user.email
         }, function (err, result) {
             if (err) throw err;
-            console.log(result.accountType);
-            tempEmail = result.accountType;
+
             if (result.accountType == "Patient") {
-                console.log("Account type: Patient");
                 mongoose.connect(url, function (err, db) {
                     db.collection('bookings').find(
                         {
+                            name: req.user.name,
                             date: {"$gte": new Date()}
                         }
                     ).toArray().then(result => {
-                        console.log(result);
+                        //console.log(result);
                         res.render('dashboard\\index', {
                             name: req.user.name,
                             email: tempEmail,
@@ -39,90 +38,22 @@ router.get('/dashboard', ensureAuthenticated, function (req, res) {
                         });
                     }).catch(error => console.error(error));
                 });
-                // res.render('dashboard\\index', {
-                //     name: req.user.name, email: tempEmail,
-                //     bookings: [{
-                //         id: "1",
-                //         name: 'Dave',
-                //         status: "Approved",
-                //         doctorName: "Dr.Graham",
-                //         bookingType: "Normal",
-                //         date: "2020/10/02",
-                //         time: "14:00",
-                //         topic: "Arm Pain",
-                //         description: "Arm is in pain when lifting and carrying items. I have seen a chiropractor however, I have not felt any improvements."
-                //     },
-                //         {
-                //             id: "2",
-                //             name: 'Jerry',
-                //             status: "Approved",
-                //             doctorName: "Dr.Woo",
-                //             bookingType: "Normal",
-                //             date: "2020/10/10",
-                //             time: "10:00",
-                //             topic: "Leg Pain",
-                //             description: "Leg is in pain walking. I have seen a chiropractor however, I have not felt any improvements."
-                //         },
-                //         {
-                //             id: "3",
-                //             name: 'Andrew',
-                //             status: "Pending",
-                //             doctorName: "Dr.Woo",
-                //             bookingType: "Normal",
-                //             date: "2020/10/10",
-                //             time: "10:00",
-                //             topic: "Leg Pain",
-                //             description: "Leg is in pain walking. I have seen a chiropractor however, I have not felt any improvements."
-                //         },
-                //         {
-                //             id: "4",
-                //             name: 'Greg',
-                //             status: "Rejected",
-                //             doctorName: "Dr.Woo",
-                //             bookingType: "Normal",
-                //             date: "2020/10/10",
-                //             time: "10:00",
-                //             topic: "Leg Pain",
-                //             description: "Leg is in pain walking. I have seen a chiropractor however, I have not felt any improvements."
-                //         },
-                //         {
-                //             id: "5",
-                //             name: 'Johnny',
-                //             status: "Approved",
-                //             doctorName: "Dr.Woo",
-                //             bookingType: "Normal",
-                //             date: "2020/10/10",
-                //             time: "10:00",
-                //             topic: "Leg Pain",
-                //             description: "Leg is in pain walking. I have seen a chiropractor however, I have not felt any improvements."
-                //         },
-                //         {
-                //             id: "6",
-                //             name: 'Jerry',
-                //             status: "Approved",
-                //             doctorName: "Dr.Woo",
-                //             bookingType: "Normal",
-                //             date: "2020/10/10",
-                //             time: "10:00",
-                //             topic: "Leg Pain",
-                //             description: "Leg is in pain walking. I have seen a chiropractor however, I have not felt any improvements."
-                //         },
-                //         {
-                //             id: "7",
-                //             name: 'Blake',
-                //             status: "Approved",
-                //             doctorName: "Dr.Kahevic",
-                //             bookingType: "Extreme",
-                //             date: "2020/10/11",
-                //             time: "12:00",
-                //             topic: "Heart Pain",
-                //             description: "Experiencing heart pains. Need to see a Doctor as soon as possible"
-                //         }
-                //     ]
-                // });
-
             } else {
-                console.log("Account type: Doctor");
+
+                mongoose.connect(url, function (err, db) {
+                    db.collection('bookings').find(
+                        {
+                            doctorName: req.user.name
+                        }
+                    ).toArray().then(result => {
+                        //console.log(result);
+                        res.render('dashboard\\index', {
+                            name: req.user.name,
+                            email: tempEmail,
+                            bookings: result
+                        });
+                    }).catch(error => console.error(error));
+                });
             }
         });
     });
@@ -156,8 +87,8 @@ router.get('/bookingsPendingApproval', ensureAuthenticated, function (req, res) 
                 status: "Pending"
                 }
             ).toArray().then(result => {
-                console.log(result);
-                res.render('dashboard\\bookingPatient', {
+                //console.log(result);
+                res.render('dashboard\\bookingsPendingApproval', {
                     name: req.user.name,
                     id: req.user.id,
                     bookings: result
@@ -170,26 +101,26 @@ router.get('/bookingsPendingApproval', ensureAuthenticated, function (req, res) 
     }
 });
 
-router.get('/bookings', ensureAuthenticated, function (req, res) {
-    if (req.user.accountType == "Patient") {
-        mongoose.connect(url, function (err, db) {
-            db.collection('bookings').find({
-                    name: req.user.name
-                }
-            ).toArray().then(result => {
-                console.log(result);
-                res.render('dashboard\\bookingPatient', {
-                    name: req.user.name,
-                    id: req.user.id,
-                    bookings: result
-                });
-
-            }).catch(error => console.error(error));
-        });
-    }else{
-        res.redirect("/booking");
-    }
-});
+// router.get('/bookings', ensureAuthenticated, function (req, res) {
+//     if (req.user.accountType == "Patient") {
+//         mongoose.connect(url, function (err, db) {
+//             db.collection('bookings').find({
+//                     name: req.user.name
+//                 }
+//             ).toArray().then(result => {
+//                 console.log(result);
+//                 res.render('dashboard\\bookingPatient', {
+//                     name: req.user.name,
+//                     id: req.user.id,
+//                     bookings: result
+//                 });
+//
+//             }).catch(error => console.error(error));
+//         });
+//     }else{
+//         res.redirect("/booking");
+//     }
+// });
 
 router.get('/bookingPatient', ensureAuthenticated, function (req, res) {
     if (req.user.accountType == "Patient") {
@@ -244,14 +175,28 @@ router.get('/DoctorBookingSettings', ensureAuthenticated, (req, res) =>
         id: req.user.id
     }));
 
-router.get('/createABooking', ensureAuthenticated, (req, res) =>
-    res.render('dashboard\\createABooking', {
-        //Place User to get access to more user data
-        name: req.user.name,
-        doctors: [{id: "1", doctorName: "Dr. Woo", doctorLocation: "123 Castle hill Road, Castle Hill, 2155, NSW"},
-            {id: "2", doctorName: "Dr. Kahevic", doctorLocation: "33 Main Street, Rouse Hill, 2155, NSW"},
-            {id: "3", doctorName: "Dr. Graham", doctorLocation: "33 Main Street, Rouse Hill, 2155, NSW"}]
-    }));
+router.get('/createABooking', ensureAuthenticated, function (req, res) {
+    mongoose.connect(url, function (err, db) {
+        db.collection('users').find(
+            {
+                accountType: "Doctor"
+            }
+        ).toArray().then(result => {
+            console.log(result);
+            res.render('dashboard\\createABooking', {
+                name: req.user.name,
+                doctors: result
+            });
+        }).catch(error => console.error(error));
+    });
+    // res.render('dashboard\\createABooking', {
+    //     //Place User to get access to more user data
+    //     name: req.user.name,
+    //     doctors: [{id: "1", doctorName: "Dr. Woo", doctorLocation: "123 Castle hill Road, Castle Hill, 2155, NSW"},
+    //         {id: "2", doctorName: "Dr. Kahevic", doctorLocation: "33 Main Street, Rouse Hill, 2155, NSW"},
+    //         {id: "3", doctorName: "Dr. Graham", doctorLocation: "33 Main Street, Rouse Hill, 2155, NSW"}]
+    // })
+});
 
 router.get('/nextBooking', ensureAuthenticated, (req, res) =>
     res.render('dashboard\\nextBooking', {
@@ -283,7 +228,7 @@ router.get('/UpcomingBookingsPatient', ensureAuthenticated, function (req, res){
 
 router.get('/UpcomingBookings', ensureAuthenticated, function (req, res) {
 
-    console.log("REQ.BODY.ACCOUNTTYPE" + req.body.accountType);
+    //console.log("REQ.BODY.ACCOUNTTYPE" + req.body.accountType);
     if(req.user.accountType == "Patient"){
        res.redirect("/UpcomingBookingsPatient");
        // res.redirect("/createABooking");
@@ -291,11 +236,12 @@ router.get('/UpcomingBookings', ensureAuthenticated, function (req, res) {
         mongoose.connect(url, function (err, db) {
             db.collection('bookings').find(
                 {
+                    doctorName: req.user.name,
                     status: "Approved",
                     date: {"$gte": new Date()}
                 }
             ).toArray().then(result => {
-                console.log(result);
+                //console.log(result);
                 res.render('dashboard\\UpcomingBookings', {
                     name: req.user.name,
                     bookings: result
@@ -304,6 +250,8 @@ router.get('/UpcomingBookings', ensureAuthenticated, function (req, res) {
         });
     }
 });
+
+
 
 router.post('/UpcomingBookingsFilter', (req, res) => {
 
@@ -319,7 +267,7 @@ router.post('/UpcomingBookingsFilter', (req, res) => {
                         date: {"$gte": new Date()}
                     }
                 ).toArray().then(result => {
-                    console.log(result);
+                    //console.log(result);
                     res.render('dashboard\\UpcomingBookings', {
                         name: req.user.name,
                         bookings: result
@@ -336,7 +284,7 @@ router.post('/UpcomingBookingsFilter', (req, res) => {
                         date: {"$gte": new Date()}
                     }
                 ).toArray().then(result => {
-                    console.log(result);
+                    //console.log(result);
                     res.render('dashboard\\UpcomingBookings', {
                         name: req.user.name,
                         bookings: result
@@ -353,18 +301,20 @@ router.post('/UpcomingBookingsFilter', (req, res) => {
 });
 
 
+
 router.get('/approveABooking', ensureAuthenticated, function (req, res) {
 
-    // console.log("REQ.BODY.ACCOUNTTYPE" + req.body.accountType);
-    // if(req.user.accountType == "Patient"){
-    //
-    //     res.redirect("/createABooking");
-    // }else {
+    //console.log("REQ.BODY.ACCOUNTTYPE" + req.body.accountType);
+    if(req.user.accountType == "Patient"){
+
+        res.redirect("/createABooking");
+    }else {
         mongoose.connect(url, function (err, db) {
             db.collection('bookings').find(
                 {
                     // "_id" : ObjectId("5f8706580ebf8b07b47f53f6")
-                    status: "Pending"
+                    status: "Pending",
+                    doctorName: req.user.name
                 }
             ).toArray().then(result => {
                 //console.log(result);
@@ -374,29 +324,26 @@ router.get('/approveABooking', ensureAuthenticated, function (req, res) {
                 });
             }).catch(error => console.error(error));
         });
-    //}
+    }
 
 });
 
 router.post('/approveBooking', (req, res) =>{
-    console.log(req.body.id);
+    //console.log(req.body.id);
 
         mongoose.connect(url, function (err, db) {
             db.collection('bookings').findOneAndUpdate({_id: ObjectId(req.body.id)}, {$set: {status: "Approved"}}, {new: true}, (err, doc) => {
                 if (err) {
                     console.log("Something wrong when updating data!");
                 }
-
                // console.log(doc);
             });
         });
         req.flash('success_msg', 'Booking Approved');
         res.redirect('/approveABooking');
-
-
 });
 router.post('/rejectBooking', (req, res) =>{
-    console.log(req.body.id);
+    //console.log(req.body.id);
 
     mongoose.connect(url, function (err, db) {
         db.collection('bookings').findOneAndUpdate({_id: ObjectId(req.body.id)}, {$set: {status: "Rejected"}}, {new: true}, (err, doc) => {
@@ -412,6 +359,49 @@ router.post('/rejectBooking', (req, res) =>{
     res.redirect('/approveABooking');
 
 });
+
+router.get('/UpdateUser', ensureAuthenticated, (req, res) =>
+    res.render('dashboard\\UpdateUser', {
+        //Place User to get access to more user data
+        name: req.user.name,
+        email: req.user.email,
+        address: req.user.address
+    }));
+
+router.get('/logout', (req, res) => {
+    req.logout();
+    req.flash('success_msg', 'You are logged out');
+    res.redirect('/users/login');
+});
+
+router.post('/UpdateUser', (req, res) =>{
+    //console.log("UPDATE USER");
+    let errors = [];
+    const {email, address} = req.body;
+
+    if (!email || !address) {
+        errors.push({msg: 'Please fill in all fields'});
+    }
+    if (errors.length > 0) {
+        req.flash('error_msg', 'Please Fill in all the Fields');
+        res.redirect('/UpdateUser');
+    }else {
+        mongoose.connect(url, function (err, db) {
+            db.collection('users').findOneAndUpdate(
+                {_id: ObjectId(req.user.id)},
+                {$set: {email: req.body.email, address: req.body.address}},
+                {new: true}, (err, doc) => {
+                    if (err) {
+                        console.log("Something wrong when updating data!");
+                    }
+                    req.flash('success_msg', 'Account Updated');
+                    res.redirect('/UpdateUser');
+                });
+        });
+    }
+});
+
+
 //
 // router.post('/approveBooking', (req, res) => {
 //

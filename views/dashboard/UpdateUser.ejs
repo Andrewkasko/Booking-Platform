@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title>Blank</title>
+    <style>#loader {
+            transition: all .3s ease-in-out;
+            opacity: 1;
+            visibility: visible;
+            position: fixed;
+            height: 100vh;
+            width: 100%;
+            background: #fff;
+            z-index: 90000
+        }
+
+        #loader.fadeOut {
+            opacity: 0;
+            visibility: hidden
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: calc(50% - 20px);
+            left: calc(50% - 20px);
+            background-color: #333;
+            border-radius: 100%;
+            -webkit-animation: sk-scaleout 1s infinite ease-in-out;
+            animation: sk-scaleout 1s infinite ease-in-out
+        }
+
+        @-webkit-keyframes sk-scaleout {
+            0% {
+                -webkit-transform: scale(0)
+            }
+            100% {
+                -webkit-transform: scale(1);
+                opacity: 0
+            }
+        }
+
+        @keyframes sk-scaleout {
+            0% {
+                -webkit-transform: scale(0);
+                transform: scale(0)
+            }
+            100% {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+                opacity: 0
+            }
+        }</style>
+    <link href="public/style.css" rel="stylesheet">
+</head>
+<body class="app">
+<div id="loader">
+    <div class="spinner"></div>
+</div>
+<script>window.addEventListener('load', function load() {
+        const loader = document.getElementById('loader');
+        setTimeout(function () {
+            loader.classList.add('fadeOut');
+        }, 300);
+    });</script>
+<div>
+    <div class="sidebar">
+        <div class="sidebar-inner">
+            <div class="sidebar-logo">
+                <div class="peers ai-c fxw-nw">
+                    <div class="peer peer-greed"><a class="sidebar-link td-n" href="/dashboard">
+                            <div class="peers ai-c fxw-nw">
+                                <div class="peer">
+                                    <div class="logo"><img src="assets/static/images/medlogo.png" alt="" height="60"
+                                                           width="60"></div>
+                                </div>
+                                <div class="peer peer-greed"><h5 class="lh-1 mB-0 logo-text">E-healthcare</h5></div>
+                            </div>
+                        </a></div>
+                    <div class="peer">
+                        <div class="mobile-toggle sidebar-toggle"><a href="" class="td-n"><i
+                                        class="ti-arrow-circle-left"></i></a></div>
+                    </div>
+                </div>
+            </div>
+            <ul class="sidebar-menu scrollable pos-r">
+                <li class="nav-item mT-30 actived"><a class="sidebar-link" href="/dashboard"><span
+                                class="icon-holder"><i class="c-blue-500 ti-home"></i> </span><span
+                                class="title">Dashboard</span></a></li>
+                <li class="nav-item"><a class="sidebar-link" href="/approveABooking"><span class="icon-holder"><i
+                                    class="c-deep-orange-500 ti-calendar"></i> </span><span class="title">Booking</span></a>
+                </li>
+                <li class="nav-item"><a class="sidebar-link" href="/blank"><span class="icon-holder"><i
+                                    class="c-deep-purple-500 ti-comment-alt"></i> </span><span class="title">Chat</span></a>
+                </li>
+                <li class="nav-item dropdown"><a class="dropdown-toggle" href="javascript:void(0);"><span
+                                class="icon-holder"><i class="c-purple-500 ti-map"></i> </span><span
+                                class="title">Maps</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="header navbar">
+            <div class="header-container">
+                <ul class="nav-left">
+                    <li><a id="sidebar-toggle" class="sidebar-toggle" href="javascript:void(0);"><i class="ti-menu"></i></a>
+                    </li>
+                </ul>
+                <ul class="nav-right">
+                    <li class="dropdown-toggle no-after peers fxw-nw ai-c lh-1">
+                        <img style="margin-top: 15px; margin-right: 10px" class="w-2r bdrs-50p"
+                             src="data:image/png;base64,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"
+                             alt="">
+
+                    </li>
+                    <li class="dropdown-toggle no-after peers fxw-nw ai-c lh-1">
+                        <span style="margin-right: 30px; margin-top: 20px"><a href="/UpdateUser"><%= name %></a></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <main class="main-content bgc-grey-100">
+            <div id="mainContent">
+                <div class="full-container">
+
+                    <div class="masonry-item col-md-12">
+                        <div class="bd bgc-white p-20">
+                            <div class="layers">
+                                <div class="layer w-100 mB-10">
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <h2 class="lh-1">Update Account </h2>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!--                                <div class="layer w-100 mB-10">-->
+                                <!--                                    <div class="form-row">-->
+                                <!--                                        <div class="col-md-6">-->
+                                <!--                                            <h2 class="lh-1">New Booking</h2>-->
+                                <!--                                        </div>-->
+
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <div class="layer w-100">
+                                    <div class="masonry-item col-md-12">
+                                        <div class="bd bgc-white p-20">
+                                            <div class="layers">
+                                                <div class="layer w-100 mB-10"><h6 class="lh-1"><%= name %></h6></div>
+                                                <div class="layer w-100">
+                                                    <%- include('../partials/messages') %>
+                                                    <br>
+                                                    <div class="col-md-6">
+                                                        <form action="/UpdateUser" method="POST">
+                                                            <div class="form row">
+
+                                                                <label for="email">Email Address <span
+                                                                            style="color: red">*</span></label>
+                                                                <input type="email" class="form-control" id="email"
+                                                                       name="email" value="<%= email %>">
+                                                            </div>
+                                                            <br>
+                                                            <div class="form row">
+                                                                <label for="address">Physical Address <span
+                                                                            style="color: red">*</span></label>
+                                                                <input type="address" class="form-control"
+                                                                       id="address"
+                                                                       name="address" value="<%= address %>">
+                                                            </div>
+                                                            <br>
+                                                            <div class="form-row">
+                                                                <div class="col-md-12">
+                                                                    <div class="text-center" style="width: 80%;">
+                                                                        <input class="btn btn-primary"
+                                                                               style="padding-left: 50px; padding-right: 50px"
+                                                                               type="submit" value="Update">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="masonry-item col-md-12">
+                                        <div class="bd bgc-white p-20">
+                                            <div class="layers">
+                                                <div class="layer w-100 mB-10"><h6 class="lh-1">Options</h6></div>
+                                                <div class="layer w-100">
+                                                    <br>
+
+                                                    <div class="col-md-6">
+
+                                                            <button type="button" class="btn btn-danger"
+                                                                    style="padding-left: 50px; padding-right: 50px"
+                                                                    onclick="location.href='/logout'">Log out
+                                                            </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script type="text/javascript" src="public/vendor.js"></script>
+<script type="text/javascript" src="public/bundle.js"></script>
+</body>
+</html>
