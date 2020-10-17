@@ -52,13 +52,17 @@
                 transform: scale(1);
                 opacity: 0
             }
-        }</style>
+        }
+
+    </style>
     <link href="public/style.css" rel="stylesheet">
 </head>
 <body class="app">
 <div id="loader">
     <div class="spinner"></div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="functionality.js"></script>
 <script>window.addEventListener('load', function load() {
         const loader = document.getElementById('loader');
         setTimeout(function () {
@@ -93,7 +97,7 @@
                 <li class="nav-item"><a class="sidebar-link" href="/calendar"><span class="icon-holder"><i
                                     class="c-deep-orange-500 ti-calendar"></i> </span><span
                                 class="title">Calendar</span></a></li>
-                <li class="nav-item"><a class="sidebar-link" href="/approveABooking"><span class="icon-holder"><i
+                <li class="nav-item"><a class="sidebar-link" href="/booking"><span class="icon-holder"><i
                                     class="c-deep-orange-500 ti-calendar"></i> </span><span class="title">Booking</span></a>
                 </li>
                 <li class="nav-item"><a class="sidebar-link" href="/blank"><span class="icon-holder"><i
@@ -260,95 +264,92 @@
                                 <div class="layer w-100 mB-10">
                                     <div class="form-row">
                                         <div class="col-md-6">
-                                            <h2 class="lh-1">Manage Bookings </h2>
+                                            <h2 class="lh-1">Manage Bookings (Doctor's View)</h2>
                                         </div>
                                     </div>
                                     <div class="topnav w-100" style="margin-top:20px; margin-bottom: 20px">
-                                        <a class="active" href="/createABooking">Create A Booking</a>
+                                        <a href="/createABooking">Create A Booking</a>
                                         <a href="/UpcomingBookingsPatient">Upcoming Bookings</a>
                                         <a href="/bookingPatient">All Bookings</a>
-                                        <a href="/bookingsPendingApproval">Bookings Pending Approval</a>
+                                        <a class="active" href="/bookingsPendingApproval">Bookings Pending Approval</a>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-6">
-                                            <h2 class="lh-1">Create A Booking</h2>
+                                            <h2 class="lh-1">Pending Bookings</h2>
                                         </div>
                                     </div>
                                 </div>
-<!--                                <div class="layer w-100 mB-10">-->
-<!--                                    <div class="form-row">-->
-<!--                                        <div class="col-md-6">-->
-<!--                                            <h2 class="lh-1">New Booking</h2>-->
-<!--                                        </div>-->
+                                <div class="w-100">
+                                    <%- include('../partials/messages') %>
+                                </div>
 
-<!--                                    </div>-->
-<!--                                </div>-->
-                                <div class="layer w-100">
-                                    <div class="masonry-item col-md-12">
-                                        <div class="bd bgc-white p-20">
-                                            <div class="layers">
-                                                <div class="layer w-100 mB-10"><h6 class="lh-1">Create an
-                                                        Appointment</h6></div>
-                                                <div class="layer w-100">
-                                                    <%- include('../partials/messages') %>
-                                                    <br>
-                                                    <form action="/users/createABooking" method="POST">
-                                                        <div class="form row">
+                                <div class="layer w-100" style="overflow-y: scroll; height:80vh;">
+                                    <% for(var booking of bookings){ %>
+                                        <div class="card" style="width: 100%;">
+                                            <div class="card-body">
 
-                                                            <input type="hidden" name="status" id="status" value="Pending">
-                                                            <input type="hidden" name="name" id="name" value="<%= name %>">
+                                                <div class="form-row">
+                                                    <div class="col-md-6">
+                                                        <h4 class="card-title"
+                                                            style="color:black;"><%= booking.name + " - " + booking.topic %></h4>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <% if(booking.bookingType == "Emergency") { %>
 
-                                                            <div class="col-md-4">
-                                                                <label for="doctorName">Select a Doctor <span style="color: red">*</span></label>
-                                                                <select class="form-control" name="doctorName" id="doctorName">
-                                                                    <option value="">Any Doctor</option>
-                                                                    <% for(var doctor of doctors){ %>
-                                                                    <option value="<%=doctor.doctorName %>"><%=doctor.doctorName%></option>
-                                                                    <% }%>
-                                                                </select>
+                                                            <div style=" width: 100%; border: 5px solid darkred; background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px);
+                                                            border-radius: 25px; padding: 10px;">
+                                                                <h5 style="text-align: center!important; color:white; margin: auto;">
+                                                                    Extreme Case</h5>
                                                             </div>
-                                                            <div class="col-md-4">
-                                                                <label for="date">Select a Date <span style="color: red">*</span></label>
-                                                                <input type="date" class="form-control" name="date" id="date">
+                                                        <% }else{ %>
+                                                            <div style=" width: 100%; border: 5px solid orangered; background: orange;
+                                                             border-radius: 25px; padding: 10px;">
+                                                                <h5 style="text-align: center!important; color:white; margin: auto;">
+                                                                    Pending Doctors Approval</h5>
                                                             </div>
-                                                            <div class="col-md-4">
-                                                                <label for="time">Select a Time <span style="color: red">*</span></label>
-                                                                <input type="time" class="form-control" id="time" name="time">
-                                                            </div>
-                                                        </div>
-                                                        <br>
-                                                        <div class="form-row">
-                                                            <div class="col-md-3">
-                                                                <label for="topic">Area of Pain <span style="color: red">*</span></label>
-                                                                <input type="text" class="form-control" placeholder="Enter Area of Pain" id="topic"
-                                                                       name="topic">
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label for="description">Description <span style="color: red">*</span></label>
-                                                                <input type="text" class="form-control" placeholder="Enter Area of Pain" id="description"
-                                                                       name="description">
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <label for="bookingType">Emergency Booking<span style="color: red">*</span></label>
-                                                                <select class="form-control" name="bookingType" id="bookingType">
-                                                                    <option value="Normal">Non-Emergency</option>
-                                                                    <option value="Emergency">Emergency</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <br>
-                                                        <div class="text-center" style="width: 80%;">
-                                                            <input class="btn btn-primary" style="padding-left: 50px; padding-right: 50px" type="submit" value="Submit">
-                                                        </div>
-
-                                                    </form>
-
-
+                                                        <% } %>
+                                                    </div>
                                                 </div>
+                                                <div class="form-row">
+
+                                                    <div class="col-md-12">
+                                                        <h6 class="card-subtitle mb-2 text-muted">
+                                                            Booking Date: <%= booking.date %>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+
+                                                    <div class="col-md-12">
+                                                        <h6 class="card-subtitle mb-2 text-muted">
+                                                            Booking Time: <%= booking.time %>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <h6 class="card-subtitle mb-2 text-muted">
+                                                            <%= "Doctor: " + booking.doctorName %>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <h6 class="card-subtitle mb-2 text-muted">
+                                                            <%= "Booking Topic: " + booking.topic %>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+
+                                                <p class="card-text">
+                                                    Booking Description: <%= booking.description %>
+                                                </p>
                                             </div>
                                         </div>
-                                    </div>
+                                        <br>
+                                    <% } %>
                                 </div>
+
                             </div>
                         </div>
                     </div>

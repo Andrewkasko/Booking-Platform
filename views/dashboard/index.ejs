@@ -259,7 +259,7 @@
                     <div class="masonry-item col-md-6" style="overflow: scroll; height:80vh;">
                         <div class="bd bgc-white p-20">
                             <div class="layers">
-                                <div class="layer w-100 mB-10"><h6 class="lh-1">All Appointments</h6></div>
+                                <div class="layer w-100 mB-10"><h6 class="lh-1">Up Coming Appointments</h6></div>
                                 <div class="layer w-100">
 
                                     <% for(var booking of bookings){ %>
@@ -292,7 +292,7 @@
                                                                 Appointment Approved</h5>
                                                         </div>
                                                         <% break; %>
-                                                        <% case "Extreme": %>
+                                                        <% case "Emergency": %>
                                                         <div style=" width: 100%; border: 5px solid darkred; background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px);
                                                             border-radius: 25px; padding: 10px;">
                                                             <h5 style="text-align: center!important; color:white; margin: auto;">
@@ -304,6 +304,7 @@
                                                         <% } %>
                                                     </div>
                                                 </div>
+                                                <br>
                                                 <div class="form-row">
 
                                                         <div class = "col-md-12">

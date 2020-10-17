@@ -62,7 +62,7 @@
     <div class="spinner"></div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="functionality.js"> </script>
+<script src="functionality.js"></script>
 <script>window.addEventListener('load', function load() {
         const loader = document.getElementById('loader');
         setTimeout(function () {
@@ -280,7 +280,7 @@
                                     </div>
                                 </div>
                                 <div class="w-100">
-                                <%- include('../partials/messages') %>
+                                    <%- include('../partials/messages') %>
                                 </div>
 
                                 <div class="layer w-100" style="overflow-y: scroll; height:80vh;">
@@ -294,35 +294,19 @@
                                                             style="color:black;"><%= booking.name + " - " + booking.topic %></h4>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <% if(booking.status == "Pending") { %>
+                                                        <% if(booking.bookingType == "Emergency") { %>
+
+                                                            <div style=" width: 100%; border: 5px solid darkred; background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px);
+                                                            border-radius: 25px; padding: 10px;">
+                                                                <h5 style="text-align: center!important; color:white; margin: auto;">
+                                                                    Extreme Case</h5>
+                                                            </div>
+                                                        <% }else{ %>
                                                             <div style=" width: 100%; border: 5px solid orangered; background: orange;
                                                              border-radius: 25px; padding: 10px;">
                                                                 <h5 style="text-align: center!important; color:white; margin: auto;">
                                                                     Pending Doctors Approval</h5>
                                                             </div>
-                                                        <% }else if (booking.status == "Rejected" ){ %>
-                                                            <div style=" width: 100%; border: 5px solid darkred; background: red;
-                                                             border-radius: 25px; padding: 10px;">
-                                                                <h5 style="text-align: center!important; color:white; margin: auto;">
-                                                                    Appointment Rejected</h5>
-                                                            </div>
-                                                        <% }else switch (booking.bookingType) {
-                                                        case "Normal": %>
-                                                        <div style=" width: 100%; border: 5px solid darkgreen; background: green;
-                                                            border-radius: 25px; padding: 10px;">
-                                                            <h5 style="text-align: center!important; color:white; margin: auto;">
-                                                                Appointment Approved</h5>
-                                                        </div>
-                                                        <% break; %>
-                                                        <% case "Extreme": %>
-                                                        <div style=" width: 100%; border: 5px solid darkred; background: repeating-linear-gradient(45deg, red, red 10px, darkred 10px, darkred 20px);
-                                                            border-radius: 25px; padding: 10px;">
-                                                            <h5 style="text-align: center!important; color:white; margin: auto;">
-                                                                Extreme Case</h5>
-                                                        </div>
-                                                        <% break; %>
-                                                        <% default: %>
-                                                        <% break; %>
                                                         <% } %>
                                                     </div>
                                                 </div>
@@ -330,7 +314,7 @@
 
                                                     <div class="col-md-12">
                                                         <h6 class="card-subtitle mb-2 text-muted">
-                                                            <%= booking.date + "  -  " + booking.time %>
+                                                            Booking Date: <%= booking.date %>
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -338,27 +322,45 @@
 
                                                     <div class="col-md-12">
                                                         <h6 class="card-subtitle mb-2 text-muted">
+                                                            Booking Time: <%= booking.time %>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <h6 class="card-subtitle mb-2 text-muted">
                                                             <%= "Doctor: " + booking.doctorName %>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <h6 class="card-subtitle mb-2 text-muted">
+                                                            <%= "Booking Topic: " + booking.topic %>
                                                         </h6>
                                                     </div>
                                                 </div>
 
                                                 <p class="card-text">
-                                                    <%= booking.description %>
+                                                    Booking Description: <%= booking.description %>
                                                 </p>
 
                                                 <div class="form-row">
                                                     <div class="col-md-12" style="float:right">
 
                                                         <form action="/rejectBooking" method="post">
-                                                            <input type="hidden" id="id" name="id" value="<%=booking._id%>">
-                                                            <button class="btn btn-secondary" style="float:right; margin: 10px; background: darkred">
+                                                            <input type="hidden" id="id" name="id"
+                                                                   value="<%= booking._id %>">
+                                                            <button class="btn btn-secondary"
+                                                                    style="float:right; margin: 10px; background: darkred">
                                                                 Reject Booking
                                                             </button>
                                                         </form>
                                                         <form action="/approveBooking" method="post">
-                                                            <input type="hidden" id="id" name="id" value="<%=booking._id%>">
-                                                            <button class="btn btn-secondary" style="float:right; margin: 10px; background: darkgreen">
+                                                            <input type="hidden" id="id" name="id"
+                                                                   value="<%= booking._id %>">
+                                                            <button class="btn btn-secondary"
+                                                                    style="float:right; margin: 10px; background: darkgreen">
                                                                 Accept Booking
                                                             </button>
                                                         </form>

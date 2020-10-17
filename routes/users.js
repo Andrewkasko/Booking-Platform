@@ -6,6 +6,10 @@ const passport = require('passport');
 const url = require('../config/keys').MongoURI;
 const mongoose = require('mongoose');
 
+const Booking = require('../models/Booking');
+
+const DoctorBookingPreference = require('../models/DoctorBookingPreference');
+
 
 //User model
 const User = require('../models/User');
@@ -101,7 +105,7 @@ router.post('/login', (req, res, next) => {
     mongoose.connect(url, function (err, db) {
         console.log('connected');
 
-        db.collection('users'). findOne({
+        db.collection('users').findOne({
             email: req.body.email
         }, function (err, result) {
             if (err) throw err;
@@ -123,6 +127,7 @@ router.post('/login', (req, res, next) => {
     });
 });
 
+
 //Logout Handle
 router.get('/logout', (req, res) => {
     req.logout();
@@ -132,11 +137,89 @@ router.get('/logout', (req, res) => {
 
 router.get('users/createABooking', (req, res) => res.render('createABooking'));
 //User model
-const Booking = require('../models/Booking');
 
-router.post('/UpdateDoctorBookingPreferences', (req,res) =>{
-   //const {}
+
+router.post('/UpdateDoctorBookingPreferences', (req, res) => {
+    //const {}
+    console.log("status: " + req.body.topic);
+    const {doctorId, startTime, finishTime, startDate, finishDate} = req.body;
+
+    let errors = [];
+    //Check required fields
+    if (!doctorId || !startTime || !finishTime || !startDate || !finishDate) {
+        errors.push({msg: 'Please fill in all fields'});
+    }
+    if (errors.length > 0) {
+        console.log("error in Update Doctor Booking Settings");
+        req.flash('error_msg', 'Please Fill in all the Fields');
+        res.redirect('/DoctorBookingSettings');
+    } else {
+        const newDoctorBookingPreference = new DoctorBookingPreference({
+            doctorId,
+            startTime,
+            finishTime,
+            startDate,
+            finishDate
+        });
+
+        newDoctorBookingPreference.save()
+            .then(booking => {
+                req.flash('success_msg', 'Settings Updated Successfully');
+                //res.redirect('/users/login');
+                res.redirect('/DoctorBookingSettings');
+
+            })
+            .catch(err => console.log(err));
+    }
 });
+
+// router.post('/UpcomingBookingsFilter', (req, res) => {
+//
+//     const {filter} = req.body;
+//
+//     switch (filter) {
+//         case "Emergency":
+//             mongoose.connect(url, function (err, db) {
+//                 db.collection('bookings').find(
+//                     {
+//                         status: "Approved",
+//                         bookingType: "Emergency",
+//                         date: {"$gte": new Date()}
+//                     }
+//                 ).toArray().then(result => {
+//                     console.log(result);
+//                     res.render('dashboard\\UpcomingBookings', {
+//                         name: req.user.name,
+//                         bookings: result
+//                     });
+//                 }).catch(error => console.error(error));
+//             });
+//             break;
+//         case "Normal":
+//             mongoose.connect(url, function (err, db) {
+//                 db.collection('bookings').find(
+//                     {
+//                         status: "Approved",
+//                         bookingType: "Normal",
+//                         date: {"$gte": new Date()}
+//                     }
+//                 ).toArray().then(result => {
+//                     console.log(result);
+//                     res.render('dashboard\\UpcomingBookings', {
+//                         name: req.user.name,
+//                         bookings: result
+//                     });
+//                 }).catch(error => console.error(error));
+//             });
+//             break;
+//         default:
+//             res.redirect('/UpcomingBookings');
+//
+//             break;
+//     }
+//
+// });
+
 
 //Register Handle
 router.post('/createABooking', (req, res) => {
@@ -152,7 +235,7 @@ router.post('/createABooking', (req, res) => {
         console.log("error in booking");
         req.flash('error_msg', 'Please Fill in all the Fields');
         res.redirect('/createABooking');
-    }else{
+    } else {
         const newBooking = new Booking({
             name,
             status,
@@ -168,7 +251,7 @@ router.post('/createABooking', (req, res) => {
             .then(booking => {
                 req.flash('success_msg', 'Booking requested');
                 //res.redirect('/users/login');
-               res.redirect('/createABooking');
+                res.redirect('/createABooking');
 
             })
             .catch(err => console.log(err));

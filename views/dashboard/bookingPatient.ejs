@@ -264,30 +264,17 @@
                                         </div>
                                     </div>
                                     <div class="topnav w-100" style="margin-top:20px; margin-bottom: 20px">
-                                        <a href="/approveABooking">Pending Bookings</a>
-                                        <a class="active" href="/UpcomingBookings">Upcoming Bookings</a>
-                                        <a href="/booking">All Bookings</a>
-                                        <a href="/DoctorBookingSettings">Doctor Booking Settings</a>
+                                        <a href="/createABooking">Create A Booking</a>
+                                        <a href="/UpcomingBookingsPatient">Upcoming Bookings</a>
+                                        <a class="active" href="/bookingPatient">All Bookings</a>
+                                        <a href="/bookingsPendingApproval">Bookings Pending Approval</a>
                                     </div>
-                                    <form action="/UpcomingBookingsFilter" method="post">
                                     <div class="form-row">
                                         <div class="col-md-6">
                                             <h2 class="lh-1">All Bookings</h2>
                                         </div>
-                                        <div class="col-md-3">
 
-                                            <label for="filter" style="margin-right:15px">Booking Type:</label>
-                                            <select class="form-control" name="filter" id="filter">
-                                                <option value="Non">No Filter</option>
-                                                <option value="Emergency">Emergency</option>
-                                                <option value="Normal">Normal</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input class="btn btn-secondary" style="margin: 27px" type="submit" value="Search">
-                                        </div>
                                     </div>
-                                    </form>
                                 </div>
                                 <div class="layer w-100">
                                     <div class="masonry-item col-md-12" style="overflow: scroll; height:80vh;">
@@ -359,42 +346,6 @@
                                                                 <p class="card-text">
                                                                     <%= booking.description %>
                                                                 </p>
-
-<!--                                                                <div class="form-row">-->
-<!--                                                                    <div class="col-md-6">-->
-<!--                                                                    </div>-->
-<!--                                                                    <div class="col-md-2">-->
-<!--                                                                        <button class="btn btn-secondary">More-->
-<!--                                                                            information-->
-<!--                                                                        </button>-->
-<!--                                                                    </div>-->
-<!--                                                                    <div class="col-md-2">-->
-<!--                                                                        <button class="btn btn-secondary">Edit Booking-->
-<!--                                                                        </button>-->
-<!--                                                                    </div>-->
-<!--                                                                    <div class="col-md-2">-->
-<!--                                                                        <div class="dropdown show">-->
-<!--                                                                            <a class="btn btn-secondary dropdown-toggle"-->
-<!--                                                                               href="#" role="button"-->
-<!--                                                                               id="dropdownMenuLink"-->
-<!--                                                                               data-toggle="dropdown"-->
-<!--                                                                               aria-haspopup="true"-->
-<!--                                                                               aria-expanded="false">-->
-<!--                                                                                Dropdown link-->
-<!--                                                                            </a>-->
-
-<!--                                                                            <div class="dropdown-menu"-->
-<!--                                                                                 aria-labelledby="dropdownMenuLink">-->
-<!--                                                                                <a class="dropdown-item"-->
-<!--                                                                                   href="#">Action</a>-->
-<!--                                                                                <a class="dropdown-item" href="#">Another-->
-<!--                                                                                    action</a>-->
-<!--                                                                                <a class="dropdown-item" href="#">Something-->
-<!--                                                                                    else here</a>-->
-<!--                                                                            </div>-->
-<!--                                                                        </div>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
 
                                                             </div>
                                                         </div>
