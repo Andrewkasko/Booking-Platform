@@ -30,3 +30,26 @@ const UserSchema = new mongoose.Schema({
 const User = mongoose.model('User', UserSchema);
 
 module.exports = User;
+
+
+module.exports.fetchData = {
+    fetchData:function(callback){
+        var addressData=User.find({address: {$exists:true}, accountType:'Doctor'});
+        addressData.exec(function(err, data){
+            if(err) throw err;
+
+            return callback(data);
+        })
+    }
+};
+module.exports.findUser = function findUser(id, callback){
+    User.findOne({_id: id}, function(err, userObj){
+        if(err){
+            return callback(err);
+        } else if (userObj){
+            return callback(null,userObj);
+        } else {
+            return callback();
+        }
+    });
+}

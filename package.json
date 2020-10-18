@@ -18,6 +18,9 @@
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.17.1",
+    "google-distance": "^1.0.1",
+    "google-distance-matrix": "^1.1.1",
+    "google-geolocation": "^1.0.2",
     "mongoose": "^5.10.2",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0"

@@ -10,6 +10,10 @@ var ObjectId = require('mongodb').ObjectID;
 
 router.get('/', (req, res) => res.render('welcome'));
 
+router.get('/map',ensureAuthenticated, function(request, response) {
+    response.render('dashboard\\map');
+});
+
 router.get('/dashboard', ensureAuthenticated, function (req, res) {
 
     var tempEmail = "";

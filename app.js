@@ -55,6 +55,8 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 //app.use('/bookings', require('./routes/bookings'));
+var addressRouter = require('./routes/distance');
+app.use('/map', addressRouter);
 
 
 // DASHBOARD
