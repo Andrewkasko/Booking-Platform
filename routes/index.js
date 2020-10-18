@@ -12,6 +12,8 @@ router.get('/dashboard', ensureAuthenticated, (req,res) =>
         name: req.user.name
     }));
 
+var addressController= require('../controllers/DistanceController');
+router.get('/map', addressController.fetchData);
 
 
 // router.get('/dashboard', ensureAuthenticated, (req,res) =>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            /* Set the size of the div element that contains the map */
+            #map {
+                height: 400px;  /* The height is 400 pixels */
+                width: 100%;  /* The width is the width of the web page */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="row mt-5">
+            <div class="col-md-6 m-auto">
+                <div class="card card-body">
+                    <h1 class="text-center mb-3">Doctor Profile</h1>
+                    <!-- <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-circle profile-avatar" alt="User avatar"> -->
+                    <p class="lead mt-4"><b>Name:</b> <%=DoctorInfo.name %></p>
+                    <p class="lead mt-4"><b>Email:</b> <%=DoctorInfo.email %></p>
+                    <p class="lead mt-4"><b>Address:</b> <%=DoctorInfo.address %></p>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

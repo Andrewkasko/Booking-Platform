@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px;  /* The height is 400 pixels */
+            width: 100%;  /* The width is the width of the web page */
+        }
+    </style>
+</head>
+<body>
+
+<input type="radio" id="search_clinic" name="radio_option" value="Search Clinic">
+<label for="search_clinic">Search Clinic</label><br>
+<input type="radio" id="find_nearby" name="radio_option" value="Find Nearby Clinics using address">
+<label for="find_nearby">Find Nearby Clinics using address</label><br>
+
+<form action="/map/search" method="POST" id="FormIDSearch" style="display:none;">
+    <div class="form-group">
+        <label for="searching_clinic">Clinic Name</label>
+        <input
+                type="text"
+                id="FormClinicName"
+                name="clinic"
+                class="form-control"
+                placeholder="Clinic Name"
+                value="<%= typeof name != 'undefined' ? name : '' %>"
+        />
+        <button type="submit" class="btn btn-primary btn-block" id="MyButton">
+            Search
+        </button>
+    </div>
+</form>
+
+<form action="/map/search" method="POST" id="FormNearbyClinic" style="display:none">
+    <div class="form-group">
+
+
+        <label for="origin_address" id="FormOrigin">Origin Address</label>
+        <input
+                type="text"
+                id="FormAddress"
+                name="address"
+                class="form-control"
+                placeholder="My Location"
+                value="<%= typeof name != 'undefined' ? name : '' %>"
+        />
+        <input
+                type="number"
+                id="FormRadius"
+                name="radius"
+                class="form-control"
+                placeholder="Radius in km"
+                value="<%= typeof name != 'undefined' ? name : '' %>"
+        />
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block" id="MyButton">
+        Search
+    </button>
+</form>
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('input[type="radio"]').click(function() {
+            var radio_but = $('input[type="radio"]:checked').val();
+            //console.log(radio_but);
+            //console.log($('#search_clinic').val());
+            if(radio_but == $('#search_clinic').val()) {
+                //console.log("HERE1");
+                $("#FormIDSearch").show();
+                $("#FormNearbyClinic").hide();
+            } else if(radio_but == $('#find_nearby').val()) {
+                //console.log("HERE2");
+                $("#FormIDSearch").hide();
+                $("#FormNearbyClinic").show();
+            }
+        });
+    });
+</script>
+
+
+<script>
+    $(document).ready(function(){
+        $('#FormNearbyClinic').submit(function(e){
+            e.preventDefault();
+            var address = $("#FormAddress").val();
+            if(address=='My Location' || address=='') {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        var pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        console.log("GOT POSITION");
+                        $("#FormAddress").val(pos.lat + " " + pos.lng);
+                        console.log($("#FormAddress").val());
+                        console.log(pos.lat + " " + pos.lng);
+                        $("#FormNearbyClinic")[0].submit();
+                        $("#FormAddress").val('');
+                        $("#FormRadius").val('');
+                    });
+                }
+            } else {
+                $("#FormNearbyClinic")[0].submit();
+                $("#FormAddress").val('');
+                $("#FormRadius").val('');
+            }
+        });
+    });
+</script>
+
+<!--The div element for the map -->
+<div id="map"></div>
+<script>
+    // Note: This example requires that you consent to location sharing when
+    // prompted by your browser. If you see the error "The Geolocation service
+    // failed.", it means you probably did not give permission for the browser to
+    // locate you.
+    var map, infoWindow;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 16
+        });
+
+
+        const geocoder = new google.maps.Geocoder();
+        geocoder.key = 'AIzaSyBv7hBYAySRTtHgg73x-Hz1oykEKe3X1vk';
+        //var myLatLng = { lat: -25.363, lng: 131.044 };
+        //var marker = new google.maps.Marker({position: data, map: map});
+        //geocoder.apiKey = 'AIzaSyBv7hBYAySRTtHgg73x-Hz1oykEKe3X1vk';
+        bounds  = new google.maps.LatLngBounds();
+
+        console.log("BEFORE ORIGIN");
+        var origin =  "<%= addressOrigin %>";
+        console.log("PRINTING ORIGIN");
+        console.log(origin);
+        console.log("DONE PRINTING");
+
+        geocoder.geocode({ address: origin }, (results, status) => {
+            if (status === "OK") {
+                new google.maps.Marker({
+                    map,
+                    position: results[0].geometry.location,
+                    title: "Hello World!",
+                });
+                loc = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+                bounds.extend(loc);
+            } else {
+                alert("Geocode was not successful for the following reason: " + status);
+            }
+            map.fitBounds(bounds);
+            map.panToBounds(bounds);
+        });
+        /*geocoder.geocode({ origin: origin }, (results, status) => {
+            if (status === "OK") {
+                new google.maps.Marker({
+                    map,
+                    position: results[0].geometry.location,
+                    title: "Hello World!",
+                });
+                loc = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+                console.log("GEOCODING ORIGIN");
+                console.log(loc);
+                bounds.extend(loc);
+            } else {
+                alert("Geocode was not successful for the following reason: " + status);
+            }
+            map.fitBounds(bounds);
+            map.panToBounds(bounds);
+        });*/
+
+        const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        /*const labels = "123456789";*/
+        let labelIndex = 0;
+        <%addressData.forEach(function(data) {%>
+            var address =  "<%= data.destination %>";
+            console.log(address);
+            geocoder.geocode({ address: address }, (results, status) => {
+                if (status === "OK") {
+                    new google.maps.Marker({
+                        map,
+                        position: results[0].geometry.location,
+                        label: labels[labelIndex++ % labels.length],
+                        title: "Hello World!",
+                    });
+                    loc = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+                    bounds.extend(loc);
+                } else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                }
+                map.fitBounds(bounds);
+                map.panToBounds(bounds);
+            });
+            /*new google.maps.Marker({
+                position: ,
+                map,
+                title: "Hello World!",
+            });*/
+        <%});%>
+
+
+        //map.setCenter(pos);
+
+        infoWindow = new google.maps.InfoWindow;
+        // Try HTML5 geolocation.
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                console.log(pos.lat + " " + pos.lng);
+
+                /*
+                loc = new google.maps.LatLng(pos.lat, pos.lng);
+                bounds.extend(loc);
+
+                infoWindow.setPosition(pos);
+                infoWindow.setContent('Location found.');
+                infoWindow.open(map);*/
+                //map.setCenter(pos);
+
+            }, function() {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+            map.fitBounds(bounds);
+            map.panToBounds(bounds);
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+
+
+
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
+</script>
+<!--Load the API from the specified URL
+* The async attribute allows the browser to render the page while the API loads
+* The key parameter will contain your own API key (which is not needed for this tutorial)
+* The callback parameter executes the initMap() function
+-->
+<script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBv7hBYAySRTtHgg73x-Hz1oykEKe3X1vk&callback=initMap">
+</script>
+
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Doctor Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Distance</th>
+        <th scope="col">Profile</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <%
+    if(addressData.length!=0){
+        var i=1;
+        addressData.forEach(function(data){
+    %>
+    <tr>
+        <th scope="row"><%=i; %></th>
+        <td><%=data.clinic %></td>
+        <td><%=data.destination %></td>
+        <td><%=data.distance %></td>
+
+        <td><a href="/map/profile?id=<%=data.id %>">@<%=data.clinic %></a></td>
+    </tr>
+    <%  i++; }) %>
+    <% } else{ %>
+        <tr>
+            <td colspan="7">No Data Found</td>
+        </tr>
+    <% } %>
+
+    </tbody>
+</table>
+
+</body>
+</html>
